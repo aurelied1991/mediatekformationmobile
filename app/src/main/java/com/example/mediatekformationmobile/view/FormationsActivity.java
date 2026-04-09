@@ -3,6 +3,7 @@ package com.example.mediatekformationmobile.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
     private void init(){
         presenter = new FormationsPresenter(this);
         presenter.chargerFormations();
+        findViewById(R.id.btnFiltrer).setOnClickListener(v -> clicFiltrer());
     }
 
     /**
@@ -72,6 +74,12 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
         Intent intent = new Intent(FormationsActivity.this, UneFormationActivity.class);
         intent.putExtra("formation", formation);
         startActivity(intent);
+    }
+
+    private void clicFiltrer() {
+        EditText txtFiltre = findViewById(R.id.txtFiltre);
+        String filtre = txtFiltre.getText().toString();
+        presenter.filtrerFormations(filtre);
     }
 
     /**

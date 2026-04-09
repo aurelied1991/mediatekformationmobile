@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class FormationsPresenter {
     private IFormationsView vue;
+    private List<Formation> allFormations;
 
     /**
      * Constructeur : valorise la propriété qui permet d'accéder à la vue
@@ -30,14 +31,10 @@ public class FormationsPresenter {
         HelperApi.call(HelperApi.getApi().getFormations(), new ICallbackApi<List<Formation>>(){
             @Override
             public void onSuccess(List<Formation> result) {
-                if(result != null){
-                    List<Formation> formations = result;
-                    if (formations != null && !formations.isEmpty()) {
-                        Collections.sort(formations, (p1, p2) -> p2.getPublishedAt().compareTo(p1.getPublishedAt()));
-                        vue.afficherListe(formations);
-                    }else{
-                        vue.afficherMessage("échec chargement formations");
-                    }
+                if(result != null && !result.isEmpty()){
+                    allFormations = result;
+                    Collections.sort(allFormations, (p1, p2) -> p2.getPublishedAt().compareTo(p1.getPublishedAt()));
+                    vue.afficherListe(allFormations);
                 }else{
                     vue.afficherMessage("échec chargement formations");
                 }
@@ -47,6 +44,30 @@ public class FormationsPresenter {
                 vue.afficherMessage("échec chargement formations");
             }
         });
+    }
+
+    public void filtrerFormations(String filtre) {
+        if (allFormations == null) {
+            vue.afficherMessage("Aucune formation chargée");
+            return;
+        }
+
+        // si filtre vide = tout afficher
+        if (filtre == null || filtre.trim().isEmpty()) {
+            vue.afficherListe(allFormations);
+            return;
+        }
+
+        List<Formation> formationsFiltrees = new java.util.ArrayList<>();
+
+        for (Formation formation : allFormations) {
+            if (formation.getTitle().toLowerCase()
+                    .contains(filtre.toLowerCase())) {
+                formationsFiltrees.add(formation);
+            }
+        }
+
+        vue.afficherListe(formationsFiltrees);
     }
 
     /**
