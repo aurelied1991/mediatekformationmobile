@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mediatekformationmobile.R;
 import com.example.mediatekformationmobile.contract.IFormationsView;
+import com.example.mediatekformationmobile.data.FormationDAO;
+import java.util.ArrayList;
 import com.example.mediatekformationmobile.model.Formation;
 import com.example.mediatekformationmobile.presenter.FormationsPresenter;
 
@@ -26,6 +28,7 @@ import java.util.List;
 public class FormationsActivity extends AppCompatActivity implements IFormationsView {
 
     private FormationsPresenter presenter;
+    private boolean modeFavoris = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,9 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
         presenter = new FormationsPresenter(this);
         presenter.chargerFormations();
         findViewById(R.id.btnFiltrer).setOnClickListener(v -> clicFiltrer());
+        if (getIntent().hasExtra("mode")) {
+            modeFavoris = getIntent().getStringExtra("mode").equals("favoris");
+        }
     }
 
     /**
@@ -55,10 +61,23 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
      * @param formations
      */
     @Override
-    public void afficherListe(List formations) {
+    public void afficherListe(List<Formation> formations) {
+        if (modeFavoris) {
+            FormationDAO dao = new FormationDAO(this);
+            List<Integer> idsFavoris = dao.getIdFavoris();
+            List<Formation> formationsFavories = new java.util.ArrayList<>();
+
+            for (Formation formation : formations) {
+                if (idsFavoris.contains(formation.getId())) {
+                    formationsFavories.add(formation);
+                }
+            }
+
+            formations = formationsFavories;
+        }
         if (formations != null){
             RecyclerView lstHisto = (RecyclerView) findViewById(R.id.lstFormations);
-            FormationListAdapter adapter = new FormationListAdapter(formations, FormationsActivity.this);
+            FormationListAdapter adapter = new FormationListAdapter(formations, FormationsActivity.this, modeFavoris);
             lstHisto.setAdapter(adapter);
             lstHisto.setLayoutManager(new LinearLayoutManager(FormationsActivity.this));
         }

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void creerMenu(){
         btnFormations.setOnClickListener(v -> ecouteMenu(FormationsActivity.class));
-
+        btnFavoris.setOnClickListener(v -> ouvrirFavoris());
     }
 
     /**
@@ -63,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void ecouteMenu(Class classe){
         Intent intent = new Intent(MainActivity.this, classe);
+        startActivity(intent);
+    }
+
+    private void ouvrirFavoris() {
+        Intent intent = new Intent(MainActivity.this, FormationsActivity.class);
+        intent.putExtra("mode", "favoris");
         startActivity(intent);
     }
 }

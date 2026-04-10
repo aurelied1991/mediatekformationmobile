@@ -1,8 +1,11 @@
 package com.example.mediatekformationmobile.presenter;
 
+import android.content.Context;
+
 import com.example.mediatekformationmobile.api.HelperApi;
 import com.example.mediatekformationmobile.api.ICallbackApi;
 import com.example.mediatekformationmobile.contract.IFormationsView;
+import com.example.mediatekformationmobile.data.FormationDAO;
 import com.example.mediatekformationmobile.model.Formation;
 
 import java.util.Collections;
@@ -33,6 +36,8 @@ public class FormationsPresenter {
             public void onSuccess(List<Formation> result) {
                 if(result != null && !result.isEmpty()){
                     allFormations = result;
+                    FormationDAO dao = new FormationDAO((Context) vue);
+                    dao.nettoyerFavorisObsoletes(allFormations);
                     Collections.sort(allFormations, (p1, p2) -> p2.getPublishedAt().compareTo(p1.getPublishedAt()));
                     vue.afficherListe(allFormations);
                 }else{

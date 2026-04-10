@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mediatekformationmobile.R;
 import com.example.mediatekformationmobile.contract.IFormationsView;
+import com.example.mediatekformationmobile.data.FormationDAO;
 import com.example.mediatekformationmobile.model.Formation;
 import com.example.mediatekformationmobile.presenter.FormationsPresenter;
 
@@ -24,15 +25,19 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
 
     private List<Formation> formations;
     private IFormationsView vue;
+    private FormationDAO formationDAO;
+    private boolean modeFavoris;
 
     /**
      * Constructeur : valorise les propriétés privées
      * @param formations
      * @param vue
      */
-    public FormationListAdapter(List<Formation> formations, IFormationsView vue){
+    public FormationListAdapter(List<Formation> formations, IFormationsView vue, boolean modeFavoris){
         this.formations = formations;
         this.vue = vue;
+        this.modeFavoris = modeFavoris;
+        this.formationDAO = new FormationDAO((Context) vue);
     }
 
     /**
@@ -69,6 +74,14 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String dateFormatee = sdf.format(publishedAt);
         holder.txtListPublishedAt.setText(dateFormatee);
+
+        Formation formation = formations.get(position);
+
+        if (formationDAO.isFavoris(formation.getId())) {
+            holder.btnListFavori.setImageResource(R.drawable.coeur_rouge);
+        } else {
+            holder.btnListFavori.setImageResource(R.drawable.coeur_gris);
+        }
 
     }
 
@@ -110,6 +123,7 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
             presenter = new FormationsPresenter(vue);
             txtListeTitle.setOnClickListener(v -> txtListeTitleOrPublishedAt_clic());
             txtListPublishedAt.setOnClickListener(v -> txtListeTitleOrPublishedAt_clic());
+            btnListFavori.setOnClickListener(v -> btnListFavori_clic());
         }
 
         /**
@@ -119,6 +133,23 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
         private void txtListeTitleOrPublishedAt_clic(){
             int position = getBindingAdapterPosition();
             presenter.transfertFormation(formations.get(position));
+        }
+
+        private void btnListFavori_clic() {
+            int position = getBindingAdapterPosition();
+            Formation formation = formations.get(position);
+
+            if (formationDAO.isFavoris(formation.getId())) {
+                formationDAO.deleteFavoris(formation.getId());
+                if (modeFavoris) {
+                    formations.remove(position);
+                    notifyItemRemoved(position);
+                    return;
+                }
+            } else {
+                formationDAO.insertFavoris(formation.getId());
+            }
+            notifyItemChanged(position);
         }
 
     }
