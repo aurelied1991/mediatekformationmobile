@@ -1,5 +1,6 @@
 package com.example.mediatekformationmobile.view;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,12 +46,14 @@ public class VideoActivity extends AppCompatActivity {
      * et affiche la vidéo
      */
     private void recupFormation(){
-        Formation formation = (Formation) getIntent().getSerializableExtra("formation");
+        Formation formation = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            formation = getIntent().getSerializableExtra("formation", Formation.class);
+        }
         if(formation!=null) {
             wbvYoutube = findViewById(R.id.wbvYoutube);
             wbvYoutube.getSettings().setJavaScriptEnabled(true);
             wbvYoutube.setWebViewClient(new WebViewClient());
-//            wbvYoutube.loadUrl("https://www.youtube.com/embed/" + formation.getVideoId());
             wbvYoutube.loadUrl("https://www.youtube.com/watch?v=" + formation.getVideoId());
         }
     }

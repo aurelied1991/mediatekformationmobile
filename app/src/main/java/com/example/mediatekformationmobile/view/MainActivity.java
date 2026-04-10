@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
      * Ouvre l'activity correspondant au paramètre
      * @param classe
      */
-    private void ecouteMenu(Class classe){
+    private void ecouteMenu(Class<?> classe){
         Intent intent = new Intent(MainActivity.this, classe);
         startActivity(intent);
     }

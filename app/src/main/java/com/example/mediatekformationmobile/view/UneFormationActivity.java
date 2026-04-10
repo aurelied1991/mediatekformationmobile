@@ -2,6 +2,7 @@ package com.example.mediatekformationmobile.view;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -77,7 +78,10 @@ public class UneFormationActivity extends AppCompatActivity {
      * Récupère la formation envoyée par une autre activity (FormationsActivity)
      */
     private void recupFormation(){
-        formation = (Formation) getIntent().getSerializableExtra("formation");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            formation = getIntent().getSerializableExtra("formation", Formation.class);
+        }
+
         if(formation!=null) {
             Date datePublication = formation.getPublishedAt();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -96,21 +100,18 @@ public class UneFormationActivity extends AppCompatActivity {
      */
     private void loadMapPreview (ImageButton img, String url) {
         //start a background thread for networking
-        new Thread(new Runnable() {
-            public void run(){
-                try {
-                    //download the drawable
-                    final Drawable drawable = Drawable.createFromStream((InputStream) new URL(url).getContent(), "src");
-                    //edit the view in the UI thread
-                    img.post(new Runnable() {
-                        public void run() {
-                            img.setImageDrawable(drawable);
-                        }
-                    });
+        new Thread(() -> {
+            try {
+                final Drawable drawable =
+                        Drawable.createFromStream(
+                                (InputStream) new URL(url).getContent(),
+                                "src"
+                        );
+
+                img.post(() -> img.setImageDrawable(drawable));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
         }).start();
     }
 }

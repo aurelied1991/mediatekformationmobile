@@ -36,8 +36,9 @@ public class FormationsPresenter {
             public void onSuccess(List<Formation> result) {
                 if(result != null && !result.isEmpty()){
                     allFormations = result;
-                    FormationDAO dao = new FormationDAO((Context) vue);
-                    dao.nettoyerFavorisObsoletes(allFormations);
+                    try (FormationDAO dao = new FormationDAO((Context) vue)) {
+                        dao.nettoyerFavorisObsoletes(allFormations);
+                    }
                     Collections.sort(allFormations, (p1, p2) -> p2.getPublishedAt().compareTo(p1.getPublishedAt()));
                     vue.afficherListe(allFormations);
                 }else{
