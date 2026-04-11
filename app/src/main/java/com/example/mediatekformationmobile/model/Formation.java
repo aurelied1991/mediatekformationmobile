@@ -3,8 +3,15 @@ package com.example.mediatekformationmobile.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Modèle représentant une formation. Cette classe contient les informations principales d'une formation
+ * récupérée depuis l'API (titre, description, vidéo, date de publication). Elle implémente Serializable
+ * afin de permettre le transfert entre activités Android.
+ */
 public class Formation implements Serializable {
-
+    /**
+     * URL de base permettant de récupérer les miniatures vidéo.
+     */
     private static final String CHEMINIMAGE = "https://i.ytimg.com/vi/";
     private int id;
     private int playlist_id;
@@ -14,7 +21,7 @@ public class Formation implements Serializable {
     private String video_id;
 
     /**
-     * Constructeur : valorise les propriétés privées
+     * Constructeur : valorise les propriétés privées. Initialise une formation avec l'ensemble de ses informations.
      * @param id
      * @param playlist_id
      * @param published_at
@@ -51,10 +58,18 @@ public class Formation implements Serializable {
         return description;
     }
 
+    /**
+     * Retourne l'URL de la miniature basse qualité de la formation.
+     * @return
+     */
     public String getMiniature() {
         return CHEMINIMAGE + video_id +"/default.jpg";
     }
 
+    /**
+     * Retourne l'URL de l'image de qualité moyenne.
+     * @return
+     */
     public String getPicture() {
         return CHEMINIMAGE + video_id +"/mqdefault.jpg";
     }

@@ -13,7 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mediatekformationmobile.R;
 
 /**
- * Activity qui affiche me menu
+ * Activity principale affichant le menu de l'application. Elle permet d'accéder aux différentes
+ * fonctionnalités : liste des formations et liste des favoris
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Traitements nécessaires dès la création de l'activity
+     * Initialise les composants et les actions du menu.
      */
     private void init(){
         chargeObjetsGraphiques();
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Récupération des objets graphiques
+     * Récupère les éléments graphiques de l'interface.
      */
     private void chargeObjetsGraphiques(){
         btnFormations = findViewById(R.id.btnFormations);
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Demande de création des écoutes sur les boutons
+     * Définit les actions associées aux boutons du menu.
      */
     private void creerMenu(){
         btnFormations.setOnClickListener(v -> ecouteMenu(FormationsActivity.class));
@@ -58,14 +59,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Ouvre l'activity correspondant au paramètre
-     * @param classe
+     * Lance une activité générique passée en paramètre.
+     * @param classe activité à ouvrir
      */
     private void ecouteMenu(Class<?> classe){
         Intent intent = new Intent(MainActivity.this, classe);
         startActivity(intent);
     }
 
+    /**
+     * Ouvre l'écran des formations en mode favoris.
+     */
     private void ouvrirFavoris() {
         Intent intent = new Intent(MainActivity.this, FormationsActivity.class);
         intent.putExtra("mode", "favoris");

@@ -23,6 +23,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Activity affichant le détail d'une formation sélectionnée. Elle affiche les informations
+ * principales : titre, description, date de publication, image associée
+ */
 public class UneFormationActivity extends AppCompatActivity {
 
     private TextView txtPublishedAt;
@@ -45,7 +49,7 @@ public class UneFormationActivity extends AppCompatActivity {
     }
 
     /**
-     * Traitements nécessaires dès la création de l'activity
+     * Initialise les composants et événements de l'activité.
      */
     private void init(){
         chargeObjetsGraphiques();
@@ -54,7 +58,7 @@ public class UneFormationActivity extends AppCompatActivity {
     }
 
     /**
-     * Récupération des objets graphiques
+     * Récupère les éléments graphiques de l'interface.
      */
     private void chargeObjetsGraphiques(){
         txtPublishedAt = (TextView) findViewById(R.id.txtPublishedAt);
@@ -64,7 +68,7 @@ public class UneFormationActivity extends AppCompatActivity {
     }
 
     /**
-     * Traitements réalisés lors du clic sur l'image
+     * Gestion du clic sur l'image de la formation. Ouvre l'activité de lecture vidéo.
      */
     private void btnPicture_clic(){
         if(formation != null) {
@@ -75,7 +79,7 @@ public class UneFormationActivity extends AppCompatActivity {
     }
 
     /**
-     * Récupère la formation envoyée par une autre activity (FormationsActivity)
+     * Récupère la formation envoyée par l'activité précédente et initialise l'affichage.
      */
     private void recupFormation(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -94,12 +98,12 @@ public class UneFormationActivity extends AppCompatActivity {
     }
 
     /**
-     * Charge une imagge à partir d'une url
-     * @param img
-     * @param url
+     * Charge une image depuis une URL distante et l'affiche dans l'interface.
+     * @param img ImageButton cible
+     * @param url URL de l'image
      */
     private void loadMapPreview (ImageButton img, String url) {
-        //start a background thread for networking
+        //Lance un thread secondaire pour charger l'image sans bloquer l'interface
         new Thread(() -> {
             try {
                 final Drawable drawable =

@@ -1,24 +1,25 @@
 package com.example.mediatekformationmobile.api;
 
 /**
- * Structure de la réponse reçue de l'api
- * @param <T> type de la partie result
+ * Classe est utilisée pour encapsuler les réponses reçues depuis le serveur afin d'uniformiser
+ * le traitement des résultats (succès, erreurs, données).
+ * @param <T> type générique correspondant au contenu de la réponse (result)
  */
 public class ResponseApi<T> {
     /**
-     * code standard HTTP (200, 500, ...)
+     * Code HTTP de la réponse (ex : 200 pour succès, 500 pour erreur serveur)
      */
     private int code;
     /**
-     * message correspondant au code
+     * Message associé à la réponse (succès ou description de l'erreur)
      */
     private String message;
     /**
-     * contenu de la réponse (formats possibles : array|int|string|null
+     * Données retournées par l'API (différents types : objet, liste, entier, chaîne, null)
      */
     private T result;
 
-    // Getters et setters
+    // Getters
     public int getCode() { return code; }
     public String getMessage() { return message; }
     public T getResult() { return result; }

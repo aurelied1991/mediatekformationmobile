@@ -12,22 +12,23 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 'presenter dédié' à la vue qui affiche la liste des formations (FormationsActivity)
+ * Presenter gérant la logique métier de l'écran affichant la liste des formations (FormationsActivity).
+ * Il fait le lien entre la vue et les sources de données (API distante et stockage local).
  */
 public class FormationsPresenter {
     private IFormationsView vue;
     private List<Formation> allFormations;
 
     /**
-     * Constructeur : valorise la propriété qui permet d'accéder à la vue
-     * @param vue
+     * Constructeur : initialise le presenter avec la vue associée.
+     * @param vue interface permettant la communication avec l'UI
      */
     public FormationsPresenter(IFormationsView vue){
         this.vue = vue;
     }
 
     /**
-     * Récupère les formations de la BDD distante et les envoie à la vue
+     * Charge les formations depuis l'API distante, met à jour les favoris locaux et envoie les données à la vue.
      */
     public void chargerFormations() {
         // sollicite l'api et récupère la réponse
@@ -42,43 +43,43 @@ public class FormationsPresenter {
                     Collections.sort(allFormations, (p1, p2) -> p2.getPublishedAt().compareTo(p1.getPublishedAt()));
                     vue.afficherListe(allFormations);
                 }else{
-                    vue.afficherMessage("échec chargement formations");
+                    vue.afficherMessage("Aucune formation disponible");
                 }
             }
             @Override
             public void onError() {
-                vue.afficherMessage("échec chargement formations");
+                vue.afficherMessage("Erreur lors du chargement des formations");
             }
         });
     }
 
+    /**
+     * Filtre les formations en fonction du texte saisi par l'utilisateur.
+     * @param filtre texte de recherche
+     */
     public void filtrerFormations(String filtre) {
         if (allFormations == null) {
             vue.afficherMessage("Aucune formation chargée");
             return;
         }
-
         // si filtre vide = tout afficher
         if (filtre == null || filtre.trim().isEmpty()) {
             vue.afficherListe(allFormations);
             return;
         }
-
         List<Formation> formationsFiltrees = new java.util.ArrayList<>();
-
         for (Formation formation : allFormations) {
             if (formation.getTitle().toLowerCase()
                     .contains(filtre.toLowerCase())) {
                 formationsFiltrees.add(formation);
             }
         }
-
         vue.afficherListe(formationsFiltrees);
     }
 
     /**
-     * Demnde de transfert de la formation vers une autre activity
-     * @param formation
+     * Transfère une formation sélectionnée vers une autre activité.
+     * @param formation formation sélectionnée
      */
     public void transfertFormation(Formation formation){
         vue.transfertFormation(formation);

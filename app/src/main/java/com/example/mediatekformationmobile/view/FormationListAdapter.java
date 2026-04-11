@@ -21,6 +21,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Adaptateur RecyclerView permettant l'affichage de la liste des formations. Il gère : l'affichage
+ * des données (titre, date), la gestion des favoris et les interactions utilisateur (clic sur item / favori)
+ */
 public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdapter.ViewHolder> {
 
     private List<Formation> formations;
@@ -29,7 +33,7 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
     private boolean modeFavoris;
 
     /**
-     * Constructeur : valorise les propriétés privées
+     * Constructeur : initialise l'adapter avec les données et la vue associée.
      * @param formations
      * @param vue
      */
@@ -58,8 +62,8 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
     }
 
     /**
-     * Remplissage de la ligne
-     *
+     * Associe les données d'une formation à la ligne correspondante et met à jour l'état visuel
+     * du favori.
      * @param holder   The ViewHolder which should be updated to represent the contents of the
      *                 item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
@@ -96,7 +100,7 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
     }
 
     /**
-     * Classe interne pour gérer une ligne (affichage, événements)
+     * Classe interne : ViewHolder représentant une ligne de la liste.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageButton btnListFavori;
@@ -117,7 +121,7 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
         }
 
         /**
-         * initialisations
+         * Initialise les événements utilisateur sur la ligne.
          */
         private void init(){
             presenter = new FormationsPresenter(vue);
@@ -135,6 +139,10 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
             presenter.transfertFormation(formations.get(position));
         }
 
+        /**
+         * Gère l'ajout ou la suppression d'une formation des favoris. En mode favoris, la ligne est
+         * supprimée immédiatement de la liste affichée après retrait.
+         */
         private void btnListFavori_clic() {
             int position = getBindingAdapterPosition();
             Formation formation = formations.get(position);
@@ -151,6 +159,5 @@ public class FormationListAdapter extends RecyclerView.Adapter<FormationListAdap
             }
             notifyItemChanged(position);
         }
-
     }
 }

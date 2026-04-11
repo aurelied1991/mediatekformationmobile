@@ -6,17 +6,15 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 /**
- * Interface contenant les signatures des méthodes pour échanger avec l'API
+ * Interface Retrofit définissant les requêtes HTTP disponibles vers l'API. Elle sert de contrat
+ * entre l'application Android et le serveur REST. Chaque méthode correspond à un endpoint de l'API.
  */
 public interface IRequestApi {
     /**
-     * Envoi en GET pour récupérer la liste des formations
+     * Récupère la liste des formations disponibles. Endpoint : GET /formation
      * le nom de la table ("formation") est ajouté à l'url
-     * @return objet Call permettant d'exécuter la requête
-     *         (la réponse au format ApirResponse dont la partie result
-     *         contiendra une liste de Formations)
+     * @return objet Call contenant une ResponseApi avec une liste de Formation
      */
     @GET("formation")
     Call<ResponseApi<List<Formation>>> getFormations();
-
 }

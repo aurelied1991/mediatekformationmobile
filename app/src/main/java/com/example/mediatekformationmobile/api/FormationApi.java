@@ -6,27 +6,29 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Classe d'accès à l'API
+ * Classe de configuration de l'accès à l'API REST. Elle initialise une instance unique de Retrofit
+ * (pattern singleton) et configure la conversion JSON via Gson.
  */
 public class FormationApi {
     private FormationApi() {
         // Empêche l'instanciation
     }
+
     // 10.0.2.2 = localhost de la machine hôte quand on est dans l'émulateur Android
     private static final String API_URL = "http://10.0.2.2/rest_mediatekformationmobile/";
 
     private static Retrofit retrofit = null;
 
     /**
-     * objet gson pour la conversion en json et le configure pour le format de dates
+     * Configuration de Gson pour le parsing des dates.
      */
     private static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
 
     /**
-     * Construit l'objet unique qui permet d'accéder à l'api
-     * @return retrofit
+     * Retourne l'instance unique de Retrofit permettant d'accéder à l'API
+     * @return instance Retrofit configurée
      */
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
@@ -39,6 +41,10 @@ public class FormationApi {
         return retrofit;
     }
 
+    /**
+     * Retourne l'instance Gson utilisée pour la conversion JSON.
+     * @return Gson configuré
+     */
     public static Gson getGson() {
         return gson;
     }

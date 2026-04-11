@@ -1,12 +1,13 @@
 package com.example.mediatekformationmobile.contract;
 
 /**
- * Contrat pour toutes les vues
+ * Interface de base pour toutes les vues de l'application. Elle définit les actions communes
+ * pouvant être déclenchées par un Presenter (pattern MVP), comme l'affichage de messages.
  */
 public interface IAllView {
     /**
-     * Méthode permettant d'afficher un message de type Toast
-     * @param message
+     * Affiche un message à l'utilisateur (généralement via Toast).
+     * @param message texte du message à afficher
      */
     void afficherMessage(String message);
 }

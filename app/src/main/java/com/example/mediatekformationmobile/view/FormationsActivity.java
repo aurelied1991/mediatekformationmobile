@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mediatekformationmobile.R;
 import com.example.mediatekformationmobile.contract.IFormationsView;
 import com.example.mediatekformationmobile.data.FormationDAO;
-import java.util.ArrayList;
 import com.example.mediatekformationmobile.model.Formation;
 import com.example.mediatekformationmobile.presenter.FormationsPresenter;
 
 import java.util.List;
 
 /**
- * Activity pour afficher la liste des formations
+ * Activity principale affichant la liste des formations. Elle implémente le contrat IFormationsView
+ * afin de recevoir les données du Presenter et de gérer l'affichage UI.
  */
 public class FormationsActivity extends AppCompatActivity implements IFormationsView {
 
@@ -44,7 +44,7 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
     }
 
     /**
-     * Traitements nécessaires dès la création de l'activity
+     * Initialise les composants de l'activité et le Presenter.
      */
     private void init(){
         presenter = new FormationsPresenter(this);
@@ -56,9 +56,9 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
     }
 
     /**
-     * Méthode permettant le transfert de la liste des formations pour affichage
-     *
-     * @param formations
+     * Méthode permettant d'afficher la liste des formations dans le RecyclerView. Si l'activité est
+     * en mode favoris, seules les formations enregistrées localement sont conservées.
+     * @param formations liste des formations à afficher
      */
     @Override
     public void afficherListe(List<Formation> formations) {
@@ -85,7 +85,6 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
 
     /**
      * Méthode permettant le transfert d'une formation vers une activity
-     *
      * @param formation
      */
     @Override
@@ -95,6 +94,9 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
         startActivity(intent);
     }
 
+    /**
+     * Récupère le texte saisi dans le champ de filtre et demande au Presenter d'appliquer le filtrage.
+     */
     private void clicFiltrer() {
         EditText txtFiltre = findViewById(R.id.txtFiltre);
         String filtre = txtFiltre.getText().toString();
@@ -103,7 +105,6 @@ public class FormationsActivity extends AppCompatActivity implements IFormations
 
     /**
      * Méthode permettant d'afficher un message de type Toast
-     *
      * @param message
      */
     @Override

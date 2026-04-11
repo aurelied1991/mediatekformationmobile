@@ -14,10 +14,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mediatekformationmobile.R;
 import com.example.mediatekformationmobile.model.Formation;
 
+/**
+ * Activity permettant l'affichage d'une vidéo YouTube associée à une formation. Elle utilise une
+ * WebView pour charger directement la vidéo à partir de l'identifiant YouTube fourni par la formation.
+ */
 public class VideoActivity extends AppCompatActivity {
-
     /**
-     * objet d'affichage de la vidéo
+     * Composant WebView utilisé pour afficher la vidéo.
      */
     WebView wbvYoutube;
 
@@ -35,15 +38,15 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     /**
-     * Affichage  de la vidéo
+     * Initialise l'affichage de la vidéo.
      */
     private void init(){
         recupFormation();
     }
 
     /**
-     * Récupère la formation envoyée par une autre activity (UneFormationActivity)
-     * et affiche la vidéo
+     * Récupère la formation transmise par l'activité précédente et charge la vidéo associée dans
+     * la WebView.
      */
     private void recupFormation(){
         Formation formation = null;
