@@ -46,9 +46,8 @@ public class HelperApi {
 
             @Override
             public void onFailure(Call<ResponseApi<T>> call, Throwable throwable) {
+                Log.e("API_ERROR", "Echec appel API", throwable);
                 callback.onError();
-                Log.e("API", "Erreur API", throwable);
-
             }
         });
     }

@@ -15,7 +15,7 @@ public class FormationApi {
     }
 
     // 10.0.2.2 = localhost de la machine hôte quand on est dans l'émulateur Android
-    private static final String API_URL = "http://10.0.2.2/rest_mediatekformationmobile/";
+    private static final String API_URL = "http://mediatekformationmobile.atwebpages.com";
 
     private static Retrofit retrofit = null;
 
