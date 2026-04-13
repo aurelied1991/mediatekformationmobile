@@ -104,7 +104,7 @@ L'application a été faite avec la version "Android Studio Narwhal 2025.1.2".<b
 Dans FormationApi.java du package api, se trouve la déclaration de la constante API_URL qui contient l’adresse IP de l’api rest pour un test en ligne. Il faut remplacer l’adresse actuelle par celle de l'api locale pour un test avec émulateur.
 ### Application Android en ligne (télécharger et installer l'APK)
 L’APK de l’application est disponible, soit à la racine du dépôt, soit dans la dossier Releases.<br>
-Étapes d’installation
+Étapes d’installation :
 - Télécharger le fichier MediatekFormationMobile.apk sur le smartphone Android.
 - Ouvrir le fichier APK depuis le dossier Téléchargements ou depuis le navigateur.
 - Si Android bloque l’installation, autoriser temporairement l’installation depuis des sources inconnues ou applications externes dans les paramètres de sécurité du téléphone.
