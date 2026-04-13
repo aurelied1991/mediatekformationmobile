@@ -99,7 +99,15 @@ Pour tester l'application mediatekformationmobile local, il faut d'abord install
 - Récupérer le zip du code de l'API (en racine du dépôt) et le dézipper dans le dossier www de wampserver (renommer le dossier en "rest_mediatekformationmobile").<br>
 - Récupérer le script mediatekformation.sql dans le zip précédent, avec phpMyAdmin, créer la BDD mediatekformation et, dans cette BDD, exécuter le script pour remplir la BDD.<br>
 - Ouvrir l'API dans Netbeans (ou autre IDE) pour pouvoir analyser le code et le faire évoluer suivant les besoins.
-### Application Android
+### Application Android en local
 L'application a été faite avec la version "Android Studio Narwhal 2025.1.2".<br>
-Une fois la BDD et l'API REST installées, si le but est de tester en déployant l'application (donc BDD et API REST sur un serveur distant et construction de l'APK) :<br>
-Dans FormationApi.java du package api, se trouve la déclaration de la constante API_URL qui contient l’adresse IP de l’api rest pour un test local avec émulateur. Il faut remplacer l’adresse actuelle par celle de l'api en ligne.
+Dans FormationApi.java du package api, se trouve la déclaration de la constante API_URL qui contient l’adresse IP de l’api rest pour un test en ligne. Il faut remplacer l’adresse actuelle par celle de l'api locale pour un test avec émulateur.
+### Application Android en ligne (télécharger et installer l'APK)
+L’APK de l’application est disponible, soit à la racine du dépôt, soit dans la dossier Releases.<br>
+Étapes d’installation
+- Télécharger le fichier MediatekFormationMobile.apk sur le smartphone Android.
+- Ouvrir le fichier APK depuis le dossier Téléchargements ou depuis le navigateur.
+- Si Android bloque l’installation, autoriser temporairement l’installation depuis des sources inconnues ou applications externes dans les paramètres de sécurité du téléphone.
+- Valider l’installation puis patienter jusqu’à la fin du processus.
+- Une fois l’installation terminée, ouvrir l’application depuis l’écran d’accueil ou le menu des applications.
+
